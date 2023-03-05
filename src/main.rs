@@ -65,15 +65,15 @@ fn get_valid_words(my_letters: String, letters_on_board: String) -> Vec<String> 
     words.retain(|word| word.len() <= available_letters.len());
 
     // remove words that does not contain all letters on board
-    words.retain(|word| {
-        let chars = word.to_lowercase();
-        for letter in letters_on_board.chars() {
-            if !chars.contains(letter) {
-                return false;
-            }
-        }
-        return true;
-    });
+    words.retain(|word|
+        letters_on_board
+        .chars()
+        .all(|char|
+            word
+            .to_lowercase()
+            .contains(char)
+        )
+    );
 
     // remove words that cannot be made with available_letters
     words.retain(|word| {
